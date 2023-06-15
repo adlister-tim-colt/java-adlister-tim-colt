@@ -91,7 +91,7 @@
     </label>
 </div>
 <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="Chicken" id="chicken" checked>
+    <input class="form-check-input" type="checkbox" value="Chicken" id="chicken">
     <label class="form-check-label" for="chicken">
         Chicken
     </label>
