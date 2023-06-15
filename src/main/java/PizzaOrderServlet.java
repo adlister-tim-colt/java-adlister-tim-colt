@@ -15,7 +15,7 @@ public class PizzaOrderServlet extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//        if(request.getMethod().equalsIgnoreCase("post")){
+
             String size = request.getParameter("size");
             String sauce = request.getParameter("sauce");
             String crust = request.getParameter("crust");
