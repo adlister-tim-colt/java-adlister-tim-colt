@@ -52,6 +52,75 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    @Override
+    public List<Ad> findAds(String keywords) {
+        String query = "SELECT * FROM ads WHERE title LIKE ? OR description LIKE ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, "%" + keywords + "%");
+            stmt.setString(2, "%" + keywords + "%");
+            ResultSet rs = stmt.executeQuery();
+            return setCategoryWithAd(createAdsFromResults(rs));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error finding an ad by keywords", e);
+        }
+    }
+
+    @Override
+    public List<Ad> findAds(Long id) {
+        return null;
+    }
+
+    @Override
+    public boolean deleteAd(Long id) {
+        return false;
+    }
+
+    @Override
+    public void updateAd(Ad adToBeUpdate) {
+
+    }
+
+    @Override
+    public List<Ad> setCategoryWithAd(List<Ad> ad) {
+        List<Ad> ads;
+        PreparedStatement statement = null;
+        for (Ad x : ad) {
+            String query = "SELECT name FROM categories JOIN ad_category ON categories.id = ad_category.category_id JOIN ads ON ad_category.ad_id = ads.id WHERE ads.id = '" + x.getId() + "'";
+            try {
+                statement = connection.prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                rs.next();
+                x.setCategory(rs.getString("name"));
+            } catch (SQLException e) {
+                throw new RuntimeException("Error adding category to ad.", e);
+            }
+        }
+        return ad;
+    }
+
+    @Override
+    public Ad findById(Long id) {
+        return null;
+    }
+
+    @Override
+    public int getIdFromAd(String title) {
+        return 0;
+    }
+
+
+//    @Override
+//    public List<Ad> findAds(Long id) {
+//        return null;
+//    }
+
+//    @Override
+//    public void updateAd(Ad adToBeUpdate) {
+//
+//    }
+
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
             rs.getLong("id"),
