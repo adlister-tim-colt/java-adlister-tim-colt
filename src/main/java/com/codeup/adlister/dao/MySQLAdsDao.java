@@ -69,36 +69,33 @@ public class MySQLAdsDao implements Ads {
 
     @Override
     public List<Ad> findAds(Long id) {
-        return null;
+        String query = "SELECT * FROM ads JOIN users ON ads.user_id = users.id WHERE user_id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            return setCategoryWithAd(createAdsFromResults(rs));
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding ads by user_id.");
+        }
     }
 
     @Override
     public boolean deleteAd(Long id) {
-        return false;
-    }
-
-    @Override
-    public void updateAd(Ad adToBeUpdate) {
-
-    }
-
-
-    public long deleteAd(long id) {
         PreparedStatement stmt;
         String sql = "DELETE FROM ads WHERE id = ?";
         try {
             stmt = connection.prepareStatement(sql);
             stmt.setLong(1, id);
-            long result = stmt.executeUpdate();
-            return result;
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
 
         }
     }
 
-
-    public int update(Ad ad) {
+    @Override
+    public void updateAd(Ad ad) {
 
         PreparedStatement stmt;
         String sql = "UPDATE ads set  user_id = ?, title = ?, description = ? WHERE id = ?";
@@ -108,10 +105,8 @@ public class MySQLAdsDao implements Ads {
             stmt.setString(2, ad.getTitle());
             stmt.setString(3, ad.getDescription());
             stmt.setLong(4, ad.getId());
-
-            int result = stmt.executeUpdate();
-            return result;
-        } catch (SQLException e) {
+            stmt.executeUpdate();
+        }  catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
@@ -169,7 +164,17 @@ public class MySQLAdsDao implements Ads {
 
     @Override
     public int getIdFromAd(String title) {
-        return 0;
+        PreparedStatement statement = null;
+        String query = "SELECT id FROM ads WHERE title = ?";
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setString(1, title);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            return rs.getInt("id");
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating a new ad_cat.", e);
+        }
     }
 
 

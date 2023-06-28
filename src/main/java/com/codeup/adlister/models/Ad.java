@@ -6,6 +6,19 @@ public class Ad {
     private String title;
     private String description;
 
+    private String category;
+
+    public Ad() {
+    }
+
+    public Ad(long id, long userId, String title, String description, String category) {
+        this.id = id;
+        this.userId = userId;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+    }
+
     public Ad(long id, long userId, String title, String description) {
         this.id = id;
         this.userId = userId;
@@ -52,5 +65,20 @@ public class Ad {
     }
 
     public void setCategory(String name) {
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    @Override
+    public String toString() {
+        return "Ad{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
+                '}';
     }
 }

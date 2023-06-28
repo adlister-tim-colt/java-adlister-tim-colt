@@ -13,12 +13,11 @@
         <h1>Welcome, ${sessionScope.user.username}!</h1>
         <div>
             <h1>Here Are all your ads!</h1>
-
             <c:forEach var="ad" items="${userAds}">
                 <div class="col-md-6">
                     <h2>${ad.title}</h2>
                     <p>${ad.description}</p>
-                    <form action="/ads/details" method="get">
+                    <form action="/ad-info/show" method="get">
                         <label for="ad_id"></label>
                         <input style="display: none;" name="ad_id" id="ad_id" value=${ad.id} type="text"/>
                         <input type="submit" class="btn btn-block btn-primary" value= "See Details">
@@ -26,17 +25,8 @@
                 </div>
             </c:forEach>
         </div>
-
     </div>
-<%--    <script>--%>
-<%--        function updateAd() {--%>
-<%--            console.log("this is the update button")--%>
-<%--        }--%>
-<%--        function deleteAd() {--%>
-<%--            console.log("this is the delete button")--%>
-<%--            alert("are you sure you want to delete this?")--%>
-<%--        }--%>
-<%--    </script>--%>
+
 
 
 </body>
