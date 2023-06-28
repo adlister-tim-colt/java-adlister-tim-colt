@@ -25,4 +25,5 @@ public interface Ads {
     void updateAd(Ad adToBeUpdate);
     List<Ad> setCategoryWithAd(List<Ad> ad);
 
+    List<Ad> adsByUserId(Long userId);
 }

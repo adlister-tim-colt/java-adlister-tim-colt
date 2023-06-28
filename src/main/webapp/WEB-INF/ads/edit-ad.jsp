@@ -18,7 +18,7 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp"/>
 <div class="container">
     <h3>Make your changes below:</h3>
-    <form action="/ads" method="post">
+    <form action="/edit-ad" method="post">
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" name="title" class="form-control" type="text" value="${adToEdit.title}" required>

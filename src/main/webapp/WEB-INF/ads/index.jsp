@@ -11,11 +11,22 @@
 
 <div class="container">
     <h1>Here Are all the ads!</h1>
+    <h2>Search for an ad</h2>
+    <form action="/ads" method="get">
+        <label for="ad_search">Search for Ad</label>
+        <input id="ad_search" name="ad_search" class="form-control" type="text">
+        <input type="submit" class="btn btn-block btn-primary">
+    </form>
 
     <c:forEach var="ad" items="${ads}">
         <div class="col-md-6">
             <h2>${ad.title}</h2>
             <p>${ad.description}</p>
+            <form action="/ads/details" method="get">
+                <label for="ad_id"></label>
+                <input style="display: none;" name="ad_id" id="ad_id" value=${ad.id} type="text"/>
+                <input type="submit" class="btn btn-block btn-primary" value= "See Details">
+            </form>
         </div>
     </c:forEach>
 </div>

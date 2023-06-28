@@ -82,6 +82,42 @@ public class MySQLAdsDao implements Ads {
 
     }
 
+
+    public long deleteAd(long id) {
+        PreparedStatement stmt;
+        String sql = "DELETE FROM ads WHERE id = ?";
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, id);
+            long result = stmt.executeUpdate();
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
+
+
+    public int update(Ad ad) {
+
+        PreparedStatement stmt;
+        String sql = "UPDATE ads set  user_id = ?, title = ?, description = ? WHERE id = ?";
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, ad.getUserId());
+            stmt.setString(2, ad.getTitle());
+            stmt.setString(3, ad.getDescription());
+            stmt.setLong(4, ad.getId());
+
+            int result = stmt.executeUpdate();
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
     @Override
     public List<Ad> setCategoryWithAd(List<Ad> ad) {
         List<Ad> ads;
@@ -99,6 +135,23 @@ public class MySQLAdsDao implements Ads {
         }
         return ad;
     }
+
+    @Override
+    public List<Ad> adsByUserId(Long userId) {
+        String query = "SELECT * FROM ads WHERE user_id = ?";
+        PreparedStatement stmt;
+        try {
+            stmt = connection.prepareStatement(query);
+            stmt.setLong(1, userId);
+
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving all ads.", e);
+        }
+
+    }
+
 
     @Override
     public Ad findById(Long id){

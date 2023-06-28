@@ -21,5 +21,15 @@
     </div>
   </div>
 </div>
+<jsp:include page="/WEB-INF/partials/navbar.jsp" />
+<div class="container">
+  <h1>Results for: <c:out value="${keywords}"/></h1>
+  <c:forEach var="ad" items="${foundAds}">
+    <div class="col-md-6">
+      <a href="/ad-info/show?id=${ad.id}"><h2><c:out value="${ad.title}"/></h2></a>
+      <p><c:out value="${ad.description}"/></p>
+    </div>
+  </c:forEach>
+</div>
 </body>
 </html>
