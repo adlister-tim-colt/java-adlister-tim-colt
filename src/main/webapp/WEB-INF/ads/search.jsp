@@ -10,8 +10,8 @@
 <body>
 
 <h2>Search</h2>
-<form action="ads" method="GET">
-  <input type="text" name="search" placeholder="Enter your search query">
+<form action="/ads/search" method="GET">
+  <input type="text" name="keyword" placeholder="Enter your search query">
   <button type="submit">Search</button>
 </form>
 

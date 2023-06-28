@@ -12,9 +12,11 @@
   <div class="m-auto">
     <div class="card m-auto h-50" style="width: 30rem;">
       <div class="card-body">
-        <h2 class="card-title"><c:out value="${selectedAd.title}"/></h2>
-        <h4 class="card-subtitle mb-2 text-muted"><strong>Category:</strong> ${selectedAd.category}</h4>
-        <p class="card-text"><c:out value="${selectedAd.description}"/></p>
+          <c:forEach var="ad" items="${ads}">
+        <h2 class="card-title"><c:out value="${ad.title}"/></h2>
+        <h4 class="card-subtitle mb-2 text-muted"><strong>Category:</strong> ${ad.category}</h4>
+        <p class="card-text"><c:out value="${ad.description}"/></p>
+          </c:forEach>
       </div>
     </div>
   </div>

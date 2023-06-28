@@ -60,7 +60,7 @@ public class MySQLAdsDao implements Ads {
             stmt.setString(1, "%" + keywords + "%");
             stmt.setString(2, "%" + keywords + "%");
             ResultSet rs = stmt.executeQuery();
-            return setCategoryWithAd(createAdsFromResults(rs));
+            return createAdsFromResults(rs);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error finding an ad by keywords", e);
@@ -101,8 +101,17 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
-    public Ad findById(Long id) {
-        return null;
+    public Ad findById(Long id){
+        String query = "SELECT * FROM ads WHERE id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractAd(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding specified Ad Object.", e);
+        }
     }
 
     @Override
